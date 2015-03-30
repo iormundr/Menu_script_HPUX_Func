@@ -26,7 +26,7 @@ There are couple of functionalities that you can find here in a menu based scrip
 The option is checking whether you can verify your list of input kernel tunables against kctune output.
 If you don't have such option to get an output from kctune - Some Unix SA do it (Don't see the logic behind it) you will be
 prompt to enter 2 lists of variables (one is the list from Unix SA with the current tunable and the second that list
-that you want to verify against). - In progress , will be uploaded shortly.
+that you want to verify against).
 
 2. Same for network tunables.
 
@@ -38,4 +38,3 @@ file that you need to enter to check)
 5. Network cards , shows the speed of ALL your active network cards with the relevant IP. Found it very useful sometimes.
 
 6. Didn't find any purpose for the 6th Option.
-
