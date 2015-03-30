@@ -200,7 +200,7 @@ fi
 while :
 do
     clear
-    print "\t    $REVON Check Menu by Alex Aizenberg  $REVOFF"
+    print "\t    $REVON Check Menu by Iormundr  $REVOFF"
     print
     print
     print "\t\033[01;32mOptions: Check for...?\033[00m"
