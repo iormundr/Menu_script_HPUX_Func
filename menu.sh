@@ -74,20 +74,37 @@ if [[ -r "/stand/current" ]];then
 		printf "Error: \033[31m%s NO FILE WAS ENTERED\033[00m\n" 
 	fi
 else
-  	    printf "Error: \033[31m%s Not able to run kctune to get kernel parameters, please enter the list of kernel parameters to check.\033[00m\n"
+        echo "Please enter a file name for kernel parameters to check\n"
         read FS_FILE
         echo ""
-        printf "Error: \033[31m%s Enter the kctune output to compare with.\033[00m\n"
-        read KC_FILE
+        echo "Full PATH is: $PWD/$FS_FILE"
         echo ""
-
-        if [[ -s "$FS_FILE" && -s "$KC_FILE" ]]; then
-                FILE="$PWD/$FS_FILE"
-                KC_FILE=$PWD/$KC_FILE"
-                $FIX_KC_FILE=`cat $KC_FILE | awk '{print $1,"           ",$2}'`
-                echo $FIX_KC_FILE
+        echo "Please enter a file name WITH SAVED kernel parameters\n"
+        read FS_FILE_S
+        echo ""
+        echo "Full PATH is: $PWD/$FS_FILE_S"
+        echo ""
+		
+        if [[ -s "$FS_FILE"  && -s "$FS_FILE_S" ]]; then
+        FILE="$PWD/$FS_FILE"
+		FILE_S="$PWD/$FS_FILE_S"
+                        while read PARAM VALUE; do
+                        #TEMP2=`cat $kctune_pam | grep -w $PARAM | cut -f 3 -d " "`
+                        TEMP_NO_USE=`cat ${FILE_S} | grep -w ${PARAM} > /tmp/ek.temp `
+                        if [[ `cat /tmp/ek.temp | grep -q ERROR;echo $?` -eq 0 ]]
+                                then
+                                        printf "%-20s \033[01;31mDoes not EXIST on the SYSTEM \033[00m \n" $PARAM
+                                else
+                                        TEMP2=`cat ${FILE_S} | grep -w ${PARAM} | awk '{print $2}'`
+                                        if [[ $TEMP2 != $VALUE ]]
+                                                then
+                                                        printf "\033[01;32m%-20s \033[00mis configured to be %s should be %s \n" $PARAM $TEMP2 $VALUE
+                                                fi
+                        fi
+                        done<"$FILE"
+        else
+                printf "Error: \033[31m%s NO FILE WAS ENTERED\033[00m\n"
         fi
-
 fi
 echo "\n"
 echo "Hit Enter to Continue..."
