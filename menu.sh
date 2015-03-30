@@ -1,4 +1,4 @@
-#!/bin/ksh -xv 
+#!/bin/ksh
 export PATH=/usr/sbin:$PATH
 
 typeset -r SLEEPTIME=2
